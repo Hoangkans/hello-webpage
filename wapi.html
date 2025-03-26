@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Power Sum API</title>
 </head>
 <body>
-    <input type="number" id="nInput" placeholder="Nhập n chia hết cho 5">
+    <input type="number" id="nInput" placeholder="Nhập n chia hết cho 2024">
     <button onclick="callApi()">Submit</button>
     <p>Tổng bậc 1: <span id="s1"></span></p>
     <p>Tổng bậc 2: <span id="s2"></span></p>
@@ -13,13 +13,17 @@
     <script>
         async function callApi() {
             const n = parseInt(document.getElementById("nInput").value);
-            if (n <= 0 || n % 5 !== 0) {
-                console.error("n phải là số nguyên dương chia hết cho 5");
+            if (n <= 0 || n % 2024 !== 0) {
+                console.error("n phải là số nguyên dương chia hết cho 2024");
                 return;
             }
 
             try {
-                const response = await fetch(`https://localhost:7251/api/PowerSum?n=${n}`);
+                const response = await fetch(`https://powersum-webapi.onrender.com/api/PowerSum?n=${n}`, {
+                    headers: {
+                        'Authorization': 'Basic ' + btoa('admin:password123')
+                    }
+                });
                 const data = await response.json();
                 if (data.error) {
                     console.error(data.error);
