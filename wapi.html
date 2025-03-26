@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Power Sum API</title>
+</head>
+<body>
+    <input type="number" id="nInput" placeholder="Nhập n chia hết cho 5">
+    <button onclick="callApi()">Submit</button>
+    <p>Tổng bậc 1: <span id="s1"></span></p>
+    <p>Tổng bậc 2: <span id="s2"></span></p>
+    <p>Tổng bậc 3: <span id="s3"></span></p>
+
+    <script>
+        async function callApi() {
+            const n = parseInt(document.getElementById("nInput").value);
+            if (n <= 0 || n % 5 !== 0) {
+                console.error("n phải là số nguyên dương chia hết cho 5");
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://localhost:7251/api/PowerSum?n=${n}`);
+                const data = await response.json();
+                if (data.error) {
+                    console.error(data.error);
+                } else {
+                    document.getElementById("s1").innerText = data.tong_bac_1;
+                    document.getElementById("s2").innerText = data.tong_bac_2;
+                    document.getElementById("s3").innerText = data.tong_bac_3;
+                    console.log("Thành công:", data);
+                }
+            } catch (error) {
+                console.error("Lỗi:", error);
+            }
+        }
+    </script>
+</body>
+</html>
